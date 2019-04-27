@@ -234,6 +234,7 @@ Transform:
   - {fileID: 2130063676}
   - {fileID: 565972726}
   - {fileID: 1238738842}
+  - {fileID: 1615099960}
   m_Father: {fileID: 1254715519}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -328,7 +329,12 @@ MonoBehaviour:
   - {fileID: 2130063677}
   - {fileID: 565972727}
   - {fileID: 1238738843}
+  - {fileID: 1615099961}
+  overrideRespawnTime: 0
+  oveeridedSpawnTime: 60
   clickHint: {fileID: 945784285}
+  mapArea: {fileID: 0}
+  id: 1
 --- !u!1 &480069192
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +382,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapObjects: []
+  overrideRespawnTime: 0
+  oveeridedSpawnTime: 120
   clickHint: {fileID: 1427468270}
+  mapArea: {fileID: 0}
+  id: 0
 --- !u!61 &480069195
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -676,9 +686,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad47cd160f59ec46b0c357e75dacdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instnace: {fileID: 0}
   prefab: {fileID: 2828644621502087695, guid: 960354d275ac0b043a9dc49b182f727d, type: 3}
   alwaysRespawn: 0
+  data: 
+  guid: 51b7681b-fdbf-4aa1-bd96-c5a698ae08d6
 --- !u!1 &645211060
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,9 +858,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad47cd160f59ec46b0c357e75dacdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instnace: {fileID: 0}
   prefab: {fileID: 7358840642233058611, guid: e84ef8c8d9816254e98b1c36b5cea023, type: 3}
   alwaysRespawn: 0
+  data: 
+  guid: 1d4a470f-5a34-4000-8ea3-1320f8114ea1
 --- !u!1 &945784285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,9 +1100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad47cd160f59ec46b0c357e75dacdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instnace: {fileID: 0}
   prefab: {fileID: 2828644621502087695, guid: 960354d275ac0b043a9dc49b182f727d, type: 3}
   alwaysRespawn: 0
+  data: 
+  guid: c9df9cc6-7e49-4227-8ae6-f32ea9ce578f
 --- !u!1 &1254715518
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,6 +1626,53 @@ Transform:
   m_Father: {fileID: 981602204}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1615099959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1615099960}
+  - component: {fileID: 1615099961}
+  m_Layer: 0
+  m_Name: LockedDoor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1615099960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615099959}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.01, y: 1.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 429220628}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1615099961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615099959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb778df639657f4e8bc4d5948c53c7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7728371111789924981, guid: ddaf451ecd9efab4a96a462e23ee67c7, type: 3}
+  alwaysRespawn: 1
+  data: 
+  guid: 5db4faa7-10f1-4f40-831a-9f396ba61738
 --- !u!1 &1628621308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,6 +2046,7 @@ GameObject:
   - component: {fileID: 1718778768}
   - component: {fileID: 1718778767}
   - component: {fileID: 1718778766}
+  - component: {fileID: 1718778769}
   m_Layer: 0
   m_Name: AreaEnter
   m_TagString: Untagged
@@ -2006,6 +2067,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   area: 0
+  areaCheckpoints:
+  - {fileID: 480069194}
+  - {fileID: 429220631}
+  areaTriggers:
+  - {fileID: 1718778769}
 --- !u!61 &1718778767
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2046,6 +2112,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1718778769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718778765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7eed9f09202d446b952e56450c1692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area: {fileID: 0}
 --- !u!1 &1813485685
 GameObject:
   m_ObjectHideFlags: 0
@@ -4781,6 +4860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad47cd160f59ec46b0c357e75dacdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instnace: {fileID: 0}
   prefab: {fileID: 2828644621502087695, guid: 960354d275ac0b043a9dc49b182f727d, type: 3}
   alwaysRespawn: 0
+  data: 
+  guid: 9073914b-59db-4e2e-af93-c263f1652b3d

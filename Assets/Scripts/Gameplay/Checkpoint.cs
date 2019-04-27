@@ -6,10 +6,20 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour, IInteractable {
 
     public List<MapObject> mapObjects;
+    
+
+    [Header("Configuration")]
+    public bool overrideRespawnTime = false;
+    public float oveeridedSpawnTime = 60f;
 
 
     [Header("Visual")]
     public GameObject clickHint;
+
+    [Header("Injected")]    
+    public MapArea mapArea;
+    public int id;
+
 
     private void Awake() {
         LoadCheckPoint();
@@ -39,6 +49,7 @@ public class Checkpoint : MonoBehaviour, IInteractable {
 
     public void Interact(Player player){
         player.CheckpointReached(this);
+        GameController.Instance.SaveGame();
     }
 
 

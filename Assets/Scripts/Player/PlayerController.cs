@@ -16,8 +16,8 @@ public class PlayerController : MonoBehaviour
 	public Transform m_GroundCheck;
 
 	const float k_GroundedRadius = .2f;
-	[SerializeField] private bool m_Grounded;
-	private Rigidbody2D m_Rigidbody2D;
+	[HideInInspector] public bool m_Grounded;
+	[HideInInspector] public Rigidbody2D m_Rigidbody2D;
 
 	private enum FacingDirection
 	{

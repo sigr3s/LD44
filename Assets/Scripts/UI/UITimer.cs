@@ -21,10 +21,10 @@ public class UITimer : MonoBehaviour
     
     void Update()
     {
-        timeText.text =  ((int) controller.remainingTime).ToString();
+        timeText.text =  ((int) GameController.gameData.remainingTime).ToString();
 
-        if(controller.remainingTime < drainThreshold){
-            float remainingPerc = controller.remainingTime / drainThreshold;
+        if(GameController.gameData.remainingTime < drainThreshold){
+            float remainingPerc = GameController.gameData.remainingTime / drainThreshold;
             timeBg.fillAmount = remainingPerc;            
         }
     }

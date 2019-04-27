@@ -1,37 +1,66 @@
 using System;
 using UnityEngine;
 
+
+[System.Serializable]
+public class BasicMapObjectData{
+    public bool shouldSpawn = true;
+}
+
 public class MapObject : MonoBehaviour
 {
-    public GameObject instnace;
+    protected GameObject instnace;
     public GameObject prefab;
-
 
     public bool alwaysRespawn;
 
 
-    public void CheckPointLoaded()
+    [Header("Internal atributes")]
+    public string data;
+    public string guid;
+
+
+    public virtual void CheckPointLoaded()
     {
-        if(alwaysRespawn){
-            if(instnace != null){
-                Destroy(instnace);
-            }
+        data = GameController.gameData.GetDataFor(this);
 
-            instnace = Instantiate(prefab, transform);             
+        if(alwaysRespawn || string.IsNullOrEmpty(data)){
+            SpawnObject();
         }
-        else
+        else if(!string.IsNullOrEmpty(data))
         {
-            if(GameController.gameData.ShouldRespawn(this)){
-                if(instnace != null){
-                    Destroy(instnace);
-                }
+            BasicMapObjectData bmod = JsonUtility.FromJson<BasicMapObjectData>(data);
 
-                instnace = Instantiate(prefab, transform); 
-            }   
+            if(bmod.shouldSpawn){
+                SpawnObject();
+            }
+            else if(instnace != null)
+            {
+                Destroy(instnace);                
+            }
         }        
     }
 
-    public void RegisterChanges(GameObject go){
-        GameController.gameData.RegisterAction(this);
+    public virtual void SpawnObject(){
+        if(instnace != null){
+            Destroy(instnace);
+        }
+
+        instnace = Instantiate(prefab, transform); 
+    }
+
+    public void RegisterChanges(BasicMapObjectData data){
+        GameController.gameData.RegisterAction(this, JsonUtility.ToJson(data));
+    }
+
+    public string GetID()
+    {
+        return guid;
+    }
+
+    private void OnValidate() {
+        if(string.IsNullOrEmpty(guid)){
+            guid = Guid.NewGuid().ToString();
+        }
     }
 }

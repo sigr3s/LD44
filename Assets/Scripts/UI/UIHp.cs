@@ -12,8 +12,8 @@ public class UIHp : MonoBehaviour {
 
     void Update()
     {
-        hpText.text =  Mathf.CeilToInt(controller.player.hp).ToString();
+        hpText.text =  Mathf.CeilToInt(controller.player.playerData.hp).ToString();
 
-        hpBar.fillAmount = controller.player.hp / 300f;
+        hpBar.fillAmount = controller.player.playerData.hp / 300f;
     }
 }
