@@ -25,8 +25,6 @@ public class InGameMenu : MonoBehaviour {
         Destroy(rt);
         byte[] bytes = screenShot.EncodeToPNG();
         System.IO.File.WriteAllBytes(Application.persistentDataPath + "/" + id + ".png", bytes);
-
-        Debug.Log(string.Format("Took screenshot to: {0}", Application.persistentDataPath + "/shoot.png"));
     }
 
     void OnGUI()
