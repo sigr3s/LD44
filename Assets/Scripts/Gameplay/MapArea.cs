@@ -9,6 +9,7 @@ public class MapArea : MonoBehaviour {
     //We will store position and not gameobject itself
     public List<Checkpoint> areaCheckpoints;
     public List<MapAreaTrigger> areaTriggers;
+    public List<Elevator> elevators;
 
     private void Awake() {
         for(int i = 0 ; i < areaCheckpoints.Count ; i++){

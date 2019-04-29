@@ -22,6 +22,9 @@ public class Checkpoint : MonoBehaviour, IInteractable {
 
 
     private void Awake() {
+        if(mapObjects.Count == 0){
+            mapObjects = new List<MapObject>(GetComponentsInChildren<MapObject>());
+        }
         LoadCheckPoint();
     }
 
@@ -33,6 +36,9 @@ public class Checkpoint : MonoBehaviour, IInteractable {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag == "Player"){
+            other.GetComponent<Player>().CheckpointReached(this);
+            GameController.Instance.SaveGame();
+            
             GetComponent<SpriteRenderer>().color = Color.red;
             clickHint.transform.DOScale(1f, 0.25f);
             other.GetComponent<Player>().SetInteractable(this);

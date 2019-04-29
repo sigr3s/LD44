@@ -1,19 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class UIHp : MonoBehaviour {
-    public Image hpBar;
     public TextMeshProUGUI hpText;
+
+    public List<Image> extraBars;
 
     
     [Header("Manager")]
     public GameController controller;
+    public List<UIHpElement> uiHpElements;
 
     void Update()
     {
-        hpText.text =  Mathf.CeilToInt(controller.player.playerData.hp).ToString();
+        int playerhp = GameController.Instance.player.playerData.hp;
 
-        hpBar.fillAmount = controller.player.playerData.hp / 300f;
+        for(int i = 0; i < uiHpElements.Count; i ++){
+            uiHpElements[i].SetState(i+1 > playerhp);
+        }
+        
     }
 }

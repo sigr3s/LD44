@@ -22,6 +22,10 @@ public class StateMapObject : MapObject {
             StateMapObjectData smod = JsonUtility.FromJson<StateMapObjectData>(data);
             state = smod.objectState;
         }
+        else
+        {
+            RegisterChanges(new StateMapObjectData(){ shouldSpawn = true, objectState = MapObjectState.Blocked});
+        }
         
         if(instnace != null){
             IStateGameObject  isgo = instnace.GetComponentInChildren<IStateGameObject>();

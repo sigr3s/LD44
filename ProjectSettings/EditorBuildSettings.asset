@@ -9,15 +9,21 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScreen.unity
     guid: 8b246b500a005df4bae0dabd02bede61
   - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 548efbe8196c7bb41a94d25d70cf82e6
+    path: Assets/Scenes/GameAreas/Main 1.unity
+    guid: 786436e25bbec184bb403aea4390ec60
   - enabled: 1
-    path: Assets/Scenes/Area0.unity
-    guid: fd80d1f691c8027459722dc744b46d2b
+    path: Assets/Scenes/GameAreas/0.unity
+    guid: 9cf3f7d043d115541aece7acc082f352
   - enabled: 1
-    path: Assets/Scenes/Area1.unity
-    guid: 6583c7637e759e54298f7fca4bd3f269
+    path: Assets/Scenes/GameAreas/1.unity
+    guid: 8868c053657d9408696074e346f6a5ab
   - enabled: 1
-    path: Assets/Scenes/Area2.unity
-    guid: d53c30a3dad3ecd4080b5c354c6fe59a
+    path: Assets/Scenes/GameAreas/2.unity
+    guid: 3d4d81eecb9ae415ba0fa8f1a6251d4b
+  - enabled: 1
+    path: Assets/Scenes/GameAreas/3.unity
+    guid: 3e93725e7c2bd4698a105e1e8c96c51d
+  - enabled: 1
+    path: Assets/Scenes/GameAreas/EndCutScene.unity
+    guid: e17b10e959b41114291c447e16058b19
   m_configObjects: {}

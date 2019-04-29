@@ -1,19 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
-public struct PlayerData{
-    [Header("Current status")]
-    public float hp;
-    public float attackCD;
-
-    [Header("Respawn info")]
-    public int lastCheckPoint;
-    public int checkPointArea;
-
-    [Header("Story")]
-    public int retievedSouls;
-}
+using DG.Tweening;
 
 public class Player : MonoBehaviour {
 
@@ -22,20 +10,34 @@ public class Player : MonoBehaviour {
 
 
     [Header("Settings")]
-    public float initialHP = 100f;
+    public int initialHP = 3;
+    public int maxHP = 5;
     public float attackRadius = 2f;
     public float attackCD = 0.5f;
-    public float damage = 1f;
-    public float hpTradePerSecond = 2f;
-    public float hpTradeModifier = 2f;
+    public int damage = 1;
+    public int hpTradePerAction = 1;
+    public int hpTradeModifier = 10;
+    public float invTime = 0.2f;
     public IInteractable interactableItem;
 
     [Header("Player Data")]
     public PlayerData playerData;
 
+    private float playerInvTime = 0f;
+
+    private Vector3 playerLocalScale;
+
+    private void Awake() {
+        playerLocalScale = transform.localScale;        
+    }
+
     private void Update() {
         if(playerData.attackCD > 0){
             playerData.attackCD -= Time.deltaTime;
+        }
+
+        if(playerInvTime > 0){
+            playerInvTime -= Time.deltaTime;
         }
     }
 
@@ -56,6 +58,8 @@ public class Player : MonoBehaviour {
     {
         playerData.hp = initialHP;
         playerData.attackCD = 0f;
+        transform.localScale = playerLocalScale;
+        GetComponent<PlayerController>().facingDirection = FacingDirection.Right;
     }
 
     public void SetInteractable(IInteractable interactable)
@@ -63,9 +67,9 @@ public class Player : MonoBehaviour {
         this.interactableItem = interactable;
     }
 
-    public void Hability()
+    public bool Hability()
     {
-        gameController.TradeHpForTime(hpTradePerSecond * Time.deltaTime, hpTradeModifier, this);
+        return gameController.TradeHpForTime(hpTradePerAction, hpTradeModifier, this);
     }
 
     public void Attack()
@@ -81,15 +85,48 @@ public class Player : MonoBehaviour {
                 if(enemy != null){
                     if(enemy.TakeDamage(damage)){
                         playerData.retievedSouls ++;
-                        playerData.hp += enemy.hp;
+                        playerData.hp += enemy.playerRecoverOnKill;
+
+                        playerData.hp = Mathf.Min(playerData.hp, maxHP);
                     }
                 }
             }
         }
     }
 
-    public void TakeDamage(float ammount)
+    public void TakeDamage(int ammount)
     {
-        playerData.hp -= ammount;
+        if(playerInvTime > 0){
+
+        }
+        else
+        {
+            playerInvTime = invTime;
+            playerData.hp -= ammount;
+
+            transform.DOKill();
+            transform.DOPunchScale( new Vector3(0,1,0) * 0.5f ,invTime, 4);
+
+            GetComponent<PlayerInput>().TakeDamage();
+        }
+    }
+
+    public void AdquiereItem(string item){
+        if(playerData.collectedObjects == null) playerData.collectedObjects = new List<string>();
+        
+        playerData.collectedObjects.Add(item);
+    }
+
+    public void AnimationControlled(bool controlled)
+    {
+        GetComponent<PlayerInput>().enabled = !controlled;
+
+        Collider2D[] playerColliders = GetComponents<Collider2D>();
+        
+        foreach(Collider2D cd in playerColliders){
+            cd.enabled = !controlled;
+        }
+
+        GetComponent<Rigidbody2D>().simulated = !controlled;
     }
 }

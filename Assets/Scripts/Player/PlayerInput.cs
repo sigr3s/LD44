@@ -7,53 +7,88 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour {
 	Player player;	
 	PlayerController playerController;
-	Animator animator;
+	AudioSource audioSource;
+	public AudioSource walkAudiosource;
+
+	public Animator animator;
+
+	
+
+    [Header("Audios")]
+	public AudioClip hability;
+	public AudioClip hit;
+	public AudioClip jump;
 	
 
 
 	[Header("Player Settings")]
 	public float runSpeed = 40f;
+	public float scaleSpeed = 40f;
 	float horizontalMove = 0f;
-	bool jump = false;
+	float verticalMove = 0f;
+	//bool jump = false;
+
+	public bool isOnLadder = false;
 
 
 	private void Awake() {
 		playerController = GetComponent<PlayerController>();
 		player = GetComponent<Player>();
-		animator = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
+		//animator = GetComponent<Animator>();
 	}
 	
 	void Update () {
 
 		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+		verticalMove = Input.GetAxisRaw("Vertical") * scaleSpeed;
+
+		if( Mathf.Abs(horizontalMove) > 0 && playerController.m_Grounded){
+			if(!walkAudiosource.isPlaying){
+				walkAudiosource.Play();
+			}
+		}
+		else
+		{
+			walkAudiosource.Pause();
+		}
+
 
 		animator.SetFloat("speed", Mathf.Abs(horizontalMove) );
 		animator.SetBool("jump", !playerController.m_Grounded);
 
-		if (Input.GetButtonDown("Jump"))
-		{
-			jump = true;
-		}		
+		if(!isOnLadder){
+			if(Input.GetButtonDown("Attack") && player.playerData.attackCD <= 0){
+				player.Attack();
+				animator.SetTrigger("attack");
 
-		if(Input.GetButtonDown("Attack") && player.playerData.attackCD <= 0){
-			player.Attack();
+			}
+
+			if(Input.GetButtonDown("Hability")){
+				if(player.Hability()){
+					animator.SetTrigger("trade");
+				}
+			}
+			else
+			{
+			}
 		}
 
-		if(Input.GetButton("Hability")){
-			player.Hability();
+		if(Input.GetButtonDown("Jump") && playerController.isJumping){
+			audioSource.PlayOneShot(jump);
 		}
-		else
-		{
-		}
+
 
 		if(Input.GetButtonDown("Submit")){
 			player.Interact();
 		}
 	}
 
-	void FixedUpdate ()
-	{
-		playerController.Move(horizontalMove * Time.fixedDeltaTime, jump);
-		jump = false;
+	private void FixedUpdate() {
+		playerController.Move(horizontalMove * Time.fixedDeltaTime, isOnLadder, verticalMove * Time.fixedDeltaTime);
+	}
+
+	public void TakeDamage(){
+		audioSource.PlayOneShot(hit);
 	}
 }

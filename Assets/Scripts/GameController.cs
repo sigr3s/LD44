@@ -3,80 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
-[System.Serializable]
-public class ObjectData{
-    public string id;
-    public string data;
-}
-
-[System.Serializable]
-public struct GameData
-{
-    public List<ObjectData> data;
-    public float remainingTime;
-    public int area;
-
-    public string GetDataFor(MapObject mapObject)
-    {
-        if(data == null) data = new List<ObjectData>();
-        string objectID = mapObject.GetID();
-
-        ObjectData objectData = data.Find( (od) =>{
-            return od.id == objectID;
-        });
-
-
-        if( objectData != null ){
-            return objectData.data;
-        }
-
-        return "";
-    }
-
-    public void RegisterAction(MapObject mapObject, string serializedData){
-
-        string objectID = mapObject.GetID();
-
-        ObjectData objectData = data.Find( (od) =>{
-            return od.id == objectID;
-        });
-
-        if(objectData != null){
-            objectData.data = serializedData;
-        }
-        else
-        {
-            ObjectData createdData = new ObjectData{ id = objectID, data = serializedData};
-            data.Add(createdData);
-        }
-    }
-}
-
-[System.Serializable]
-public struct AreaInfo{
-    public string areaScene;
-    public List<string> visitableAreas;
-}
 
 public class GameController : Singleton<GameController>, IGameController
 {
+    private AudioSource fxSource;
     public static GameData gameData;
 
     [Header("Settings")]
     public float checkPointTime = 30f;
+    public float maxTime = 80f;
 
+    
 
     [Header("References")]
     public Player player;
     public List<AreaInfo> areasInfo;
     public Fader fader;
     public GameObject pauseMenu;
+    public AudioSource mainSound;
 
 
     [Header("Area settings")]
     public int startArea = 0;
     public int startCheckpoint = 0;
+
+
+    [Header("Audio")]
+    public AudioClip elevator;
+    public AudioClip keySound;
+    public AudioClip saveGame;
+
+    [Header("Main Audio")]
+    public AudioClip mainTheme0;
+    public AudioClip mainTheme1;
 
 
     [Header("Debug")]
@@ -86,8 +47,10 @@ public class GameController : Singleton<GameController>, IGameController
     public bool forceGameID = false;
     public string gameID = "";
 
-   
+#region UnityLifecycle
     private void Awake() {
+        fxSource = GetComponent<AudioSource>();
+
         player.gameController = this;
         player.playerData.checkPointArea = startArea;
         player.playerData.lastCheckPoint = startCheckpoint;
@@ -110,8 +73,61 @@ public class GameController : Singleton<GameController>, IGameController
             RespawnPlayer(player, false);        
         }
     }
+    
 
+    private float avoidAudioChnage;
+    void Update()
+    {   
+        if(!isRespawning){
+            gameData.remainingTime -= Time.deltaTime * gameTimeScale;
 
+            if(gameData.remainingTime <= 0){
+                RespawnPlayer(player, true);
+            }
+
+            if(player.playerData.hp <= 0){
+                RespawnPlayer(player, true);
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            PausePlay();
+        }
+
+        if(avoidAudioChnage <= 0){
+            if(player.transform.position.y < -8 && mainSound.clip != mainTheme1){
+                mainSound.clip = mainTheme1;
+                mainSound.Play();
+                avoidAudioChnage = 5f;
+            }
+            else if(player.transform.position.y > -8 && mainSound.clip != mainTheme0)
+            {
+                mainSound.clip = mainTheme0;
+                mainSound.Play();
+                avoidAudioChnage = 5f;
+            }
+        }
+        else
+        {
+            avoidAudioChnage -= Time.deltaTime;
+        }
+
+        
+
+    #if UNITY_EDITOR
+        CheatCommands();
+    #endif
+
+    }
+
+    public void PausePlay(){
+        Time.timeScale = 1f - Time.timeScale;
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
+    }
+
+#endregion
+
+#region Save Load
     [ContextMenu("Save")]
     public void SaveGame(){
         if(string.IsNullOrEmpty(gameID)) return;
@@ -119,6 +135,10 @@ public class GameController : Singleton<GameController>, IGameController
         PlayerPrefs.SetString( gameID + "_Data", JsonUtility.ToJson(gameData));        
         PlayerPrefs.SetString( gameID + "_Player", JsonUtility.ToJson(player.playerData));
         PlayerPrefs.Save();
+
+        fxSource.PlayOneShot(saveGame, 0.01f);
+
+        gameData.remainingTime = checkPointTime;
     }
 
     [ContextMenu("Load")]
@@ -147,13 +167,28 @@ public class GameController : Singleton<GameController>, IGameController
         RespawnPlayer(player, false);
     }
 
-    public void LoadArea(int areaIdx, bool mainBlocking = false){
-        LoadArea(areasInfo[areaIdx], mainBlocking);
+    public void LoadArea(int areaIdx, bool mainBlocking = false, bool unloadUnused = true){
+        LoadArea(areasInfo[areaIdx], mainBlocking, unloadUnused);
         gameData.area = areaIdx;
     }
 
+    public void UnLoadArea(AreaInfo areaInfo, bool onlyMain){
+        if(loadedAreas.Contains(areaInfo.areaScene)){
+            SceneManager.UnloadSceneAsync(areaInfo.areaScene);
+            loadedAreas.Remove(areaInfo.areaScene);
+        }
 
-    public void LoadArea(AreaInfo areainfo, bool mainBlocking = false){
+        if(!onlyMain){
+            foreach(string va in areaInfo.visitableAreas){
+                if(loadedAreas.Contains(va)){
+                    SceneManager.UnloadSceneAsync(va);
+                    loadedAreas.Remove(va);
+                }
+            }
+        }
+    }
+
+    public void LoadArea(AreaInfo areainfo, bool mainBlocking = false, bool unloadUnused = true){
         List<string> newLoadedAreas = new List<string>();
 
         if(!loadedAreas.Contains(areainfo.areaScene)){
@@ -185,44 +220,27 @@ public class GameController : Singleton<GameController>, IGameController
         }
 
         foreach(string unload in loadedAreas){
-            SceneManager.UnloadSceneAsync(unload);
+            if(unloadUnused){
+                SceneManager.UnloadSceneAsync(unload);
+            }
+            else
+            {
+                newLoadedAreas.Add(unload);
+            }
         }
 
         loadedAreas = newLoadedAreas;
 
     }
    
-    void Update()
-    {   
-        if(!isRespawning){
-            gameData.remainingTime -= Time.deltaTime * gameTimeScale;
+#endregion
 
-            if(gameData.remainingTime <= 0){
-                RespawnPlayer(player, true);
-            }
-
-            if(player.playerData.hp <= 0){
-                RespawnPlayer(player, true);
-            }
-        }
-
-        if(Input.GetKeyDown(KeyCode.Escape)){
-            Time.timeScale = 1f - Time.timeScale;
-            pauseMenu.SetActive(!pauseMenu.activeSelf);
-        }
-
-    #if UNITY_EDITOR
-        CheatCommands();
-    #endif
-
-    }
-
-
+#region  Respawn
     bool isRespawning = false;
     public IEnumerator RespawnPlayerC(Player player, bool death){
-        yield return new WaitForSeconds(0.1f);
+        yield return null;
 
-        Checkpoint[] activeCheckPoints = FindObjectsOfType<Checkpoint>();
+        MapArea[] activeMapAreas = FindObjectsOfType<MapArea>();
         
         if(death){
             player.Respawn();
@@ -231,16 +249,19 @@ public class GameController : Singleton<GameController>, IGameController
         bool placedPlayer = false;
         if(gameData.remainingTime < checkPointTime) gameData.remainingTime = checkPointTime;
 
-        foreach(Checkpoint checkpoint in activeCheckPoints){
-            checkpoint.LoadFromCheckPoint();
-            
-            if( checkpoint.id == player.playerData.lastCheckPoint && 
-                checkpoint.mapArea.area == player.playerData.checkPointArea){
-                placedPlayer = true;
+        foreach(MapArea mapArea in activeMapAreas){
+            if(mapArea.area == player.playerData.checkPointArea){
+                Checkpoint checkpoint = mapArea.areaCheckpoints[player.playerData.lastCheckPoint];
                 player.transform.position = checkpoint.transform.position;
+                checkpoint.LoadCheckPoint();
+
+                placedPlayer = true;
+
                 if(checkpoint.overrideRespawnTime){
-                    checkPointTime = checkpoint.oveeridedSpawnTime;
-                }
+                    if(gameData.remainingTime < checkpoint.oveeridedSpawnTime){
+                        gameData.remainingTime = checkpoint.oveeridedSpawnTime;
+                    }
+                }          
             }
         }
 
@@ -251,7 +272,6 @@ public class GameController : Singleton<GameController>, IGameController
         isRespawning = false;
         fader.FadeOut(); 
     }
-
     public void RespawnPlayer(Player player, bool death){
         fader.gameObject.SetActive(true);
         fader.FadeIn();
@@ -265,14 +285,35 @@ public class GameController : Singleton<GameController>, IGameController
         StartCoroutine(RespawnPlayerC(player, death));
        
     }
-
+#endregion
+    
+#region Player Habilities
+    public bool TradeHpForTime(int am, int timeModifier, Player player)
+    {
+        if((player.playerData.hp - am) > 1){
+            if(gameData.remainingTime + am * timeModifier > maxTime){
+                return false;
+            }
+            else
+            {
+                gameData.remainingTime += am * timeModifier;
+                player.TakeDamage(am);
+                return true;
+            }
+        }
+        else
+        {
+            return false;           
+        }
+    }
+#endregion
     void CheatCommands(){
 
-        if(Input.GetKeyDown(KeyCode.F1)){
+        if(Input.GetKeyDown(KeyCode.O)){
             gameData.remainingTime -= 10f;
         }
 
-        if(Input.GetKeyDown(KeyCode.F2)){
+        if(Input.GetKeyDown(KeyCode.P)){
             gameTimeScale = 1f - gameTimeScale;
         }
 
@@ -286,15 +327,92 @@ public class GameController : Singleton<GameController>, IGameController
 
     }
 
-    public void TradeHpForTime(float ammount, float damageModifier, Player player)
+
+    public void PortalTo(int connectedWithArea, int connectedWithElevator)
     {
-        if((player.playerData.hp - ammount) > 1f){
-            gameData.remainingTime += ammount;
-            player.TakeDamage(ammount*damageModifier);
+
+        if(!loadedAreas.Contains(areasInfo[connectedWithArea].areaScene)){
+            LoadArea(connectedWithArea, true);
         }
-        else
-        {
-            //cannot trade health            
+
+        StartCoroutine(PortalToC(connectedWithArea, connectedWithElevator));        
+    }
+
+    public IEnumerator PortalToC(int connectedWithArea, int connectedWithElevator){
+        yield return null;
+
+        MapArea[] activeMapAreas = FindObjectsOfType<MapArea>();
+
+        foreach(MapArea mapArea in activeMapAreas){
+            if(mapArea.area == connectedWithArea){
+                Elevator elevator = mapArea.elevators[connectedWithElevator];
+                player.transform.position = elevator.transform.position;
+            }
         }
+    }
+
+    public void ElevatorTo(int connectedWithArea, int connectedWithElevator, List<int> traversedAreas)
+    {
+        fxSource.clip = elevator;
+        fxSource.Play();
+
+        if(!loadedAreas.Contains(areasInfo[connectedWithArea].areaScene)){
+            Debug.Log("Load area??");
+            LoadArea(connectedWithArea, true, false);
+        }
+        
+        player.AnimationControlled(true);
+        gameTimeScale = 0f;
+        StartCoroutine(ElevatorToC(connectedWithArea, connectedWithElevator));
+
+    }
+
+    public IEnumerator ElevatorToC(int connectedWithArea, int connectedWithElevator){
+        yield return null;
+
+        MapArea[] activeMapAreas = FindObjectsOfType<MapArea>();
+
+        foreach(MapArea mapArea in activeMapAreas){
+            if(mapArea.area == connectedWithArea){
+                Elevator elevator = mapArea.elevators[connectedWithElevator];
+
+                Vector3 targetPosition = elevator.transform.position;
+                elevator.transform.position = player.transform.position;
+                player.transform.SetParent(elevator.transform);
+
+
+                var sprites = elevator.GetComponentsInChildren<SpriteRenderer>();
+                
+                foreach(var s in sprites){
+                    s.sortingOrder -= 10;
+                }
+
+                float distance = Vector3.Distance(targetPosition, player.transform.position);
+                float time = distance / 8f;
+
+
+                elevator.transform.DOMove(targetPosition, time).OnComplete( () => {
+                    player.AnimationControlled(false);
+                    player.transform.SetParent(transform);
+                    player.transform.SetParent(null);
+                    player.transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y , 0);
+                    gameTimeScale = 1f;
+
+                    
+                    fxSource.Stop();
+
+                    
+                    foreach(var s in sprites){
+                        s.sortingOrder += 10;
+                    }
+                });
+            }
+        }
+    }
+
+    public void GetKey()
+    {
+        //
+        fxSource.PlayOneShot(keySound);
     }
 }

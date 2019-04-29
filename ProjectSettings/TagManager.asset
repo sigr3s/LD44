@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BossOpen
   layers:
   - Default
   - TransparentFX
@@ -13,6 +14,8 @@ TagManager:
   - UI
   - 
   - 
+  - Enemy
+  - Player
   - 
   - 
   - 
@@ -34,10 +37,14 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - GameTriggers
   m_SortingLayers:
+  - name: bottom1
+    uniqueID: 3997887765
+    locked: 0
+  - name: bottom
+    uniqueID: 1241285387
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -1,16 +1,22 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class StateDoor : MonoBehaviour, IStateGameObject, IInteractable
 {
     public Collider2D doorCollider;
     public MapObjectState currentStatus;
+    Vector3 originalPosition;
+    int originalOrdering;
 
+    private void Awake() {
+        originalOrdering = GetComponent<SpriteRenderer>().sortingOrder;
+    }
 
-    public void Interact(Player player)
+    public virtual void Interact(Player player)
     {
         switch(currentStatus){
             case MapObjectState.Activated:
-                currentStatus = MapObjectState.Blocked;
+                //currentStatus = MapObjectState.Blocked;
             break;
             case MapObjectState.Blocked:
                 currentStatus = MapObjectState.Activated;
@@ -24,25 +30,29 @@ public class StateDoor : MonoBehaviour, IStateGameObject, IInteractable
     public void SetState(MapObjectState state)
     {                
         currentStatus = state;
+        GetComponent<SpriteRenderer>().DOFade(1,0f);
+        GetComponent<SpriteRenderer>().sortingOrder = originalOrdering;
+
         switch(state){
             case MapObjectState.Blocked:
+                GetComponent<SpriteRenderer>().enabled = true;
                 doorCollider.enabled = true;
-                GetComponent<SpriteRenderer>().color = Color.red;
             break;
             case MapObjectState.Activated:
                 doorCollider.enabled = false;
-                GetComponent<SpriteRenderer>().color = Color.green;
+                GetComponent<SpriteRenderer>().DOFade(0, 2f);
+                GetComponent<SpriteRenderer>().sortingOrder -= 2;
             break;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    public void OnTriggerEnter2D(Collider2D other) {
         if(other.tag == "Player"){
             other.GetComponent<Player>().SetInteractable(this);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    public void OnTriggerExit2D(Collider2D other) {
         if(other.tag == "Player"){
             other.GetComponent<Player>().SetInteractable(null);
         }

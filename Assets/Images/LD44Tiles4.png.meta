@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: fffeb663c95b3ef47b9ce27511842f0d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8577832152764406406
+    second: LD44Tiles4_0
+  - first:
+      213: 1044845364633693134
+    second: LD44Tiles4_1
+  - first:
+      213: -337288810187836303
+    second: LD44Tiles4_2
+  - first:
+      213: 7550123381258438129
+    second: LD44Tiles4_3
+  - first:
+      213: -1164292674577599586
+    second: LD44Tiles4_4
+  - first:
+      213: -3351344490892838718
+    second: LD44Tiles4_5
+  - first:
+      213: 3980313459131447283
+    second: LD44Tiles4_6
+  - first:
+      213: 279359482778630937
+    second: LD44Tiles4_7
+  - first:
+      213: 5046016693242281437
+    second: LD44Tiles4_8
+  - first:
+      213: -2140640787913894940
+    second: LD44Tiles4_9
+  - first:
+      213: 7089550724253682465
+    second: LD44Tiles4_10
+  - first:
+      213: -8759094466443877565
+    second: LD44Tiles4_11
+  - first:
+      213: 2089516874760531352
+    second: LD44Tiles4_12
+  - first:
+      213: -3171353420551990274
+    second: LD44Tiles4_13
+  - first:
+      213: -559767374642083483
+    second: LD44Tiles4_14
+  - first:
+      213: 2627778667738800975
+    second: LD44Tiles4_15
+  - first:
+      213: 4405297540811021914
+    second: LD44Tiles4_16
+  - first:
+      213: 4356938713884863297
+    second: LD44Tiles4_17
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LD44Tiles4_0
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 480
+        width: 516
+        height: 124
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c846ac1322931c4ca0afe192f7fec52
+      internalID: 8577832152764406406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_1
+      rect:
+        serializedVersion: 2
+        x: 1008
+        y: 480
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f66d0e96c941eb646a2fdd64ddd96bc1
+      internalID: 1044845364633693134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 246
+        width: 192
+        height: 170
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e039ea0d8c3b884fb26fadb5f27c3bd
+      internalID: -337288810187836303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_3
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 352
+        width: 14
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f40800370d0eea4abeb2f6894e634ee
+      internalID: 7550123381258438129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_4
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 352
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b6bdb860e2efd444bc2b5d6ce4c2cab
+      internalID: -1164292674577599586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_5
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 353
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b6b5140c0d518b4b8cb8ca08ae9f808
+      internalID: -3351344490892838718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_6
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 353
+        width: 516
+        height: 124
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7364d74e6a692c44824db4e33d0a9d1
+      internalID: 3980313459131447283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_7
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 160
+        width: 769
+        height: 189
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10b1d145e2b496249a2c12f21d622bc4
+      internalID: 279359482778630937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 64
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d51afa150c467644a7234e946a501f3
+      internalID: 5046016693242281437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_9
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 177
+        width: 96
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebe244c42705ed341a1457c167f87246
+      internalID: -2140640787913894940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_10
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 109
+        width: 96
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04dc3fa7a1130f84b9cfa929a6514dff
+      internalID: 7089550724253682465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_11
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 160
+        width: 437
+        height: 113
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a769764be5ab35144a3b77fdf9d6a6fb
+      internalID: -8759094466443877565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_12
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 160
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96d34934619a0d346be79cfeac0105bc
+      internalID: 2089516874760531352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_13
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 160
+        width: 24
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c009e6f818c44f4cad3e539aa645dfc
+      internalID: -3171353420551990274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_14
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 167
+        width: 16
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5bba54b1dc591c4bb9d59bed05a0a11
+      internalID: -559767374642083483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_15
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 103
+        width: 35
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1b399f2693f3774b8f8aee8253977ef
+      internalID: 2627778667738800975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_16
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 32
+        width: 437
+        height: 113
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dc066954bfda1c488ab8b24251c57dc
+      internalID: 4405297540811021914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LD44Tiles4_17
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 72
+        width: 42
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 552d2902cfa73654591329c551c43e9d
+      internalID: 4356938713884863297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: ca10df44be713fc46a1117bb1650b154
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

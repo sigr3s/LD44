@@ -1,3 +1,3 @@
 public interface IGameController {
-    void TradeHpForTime(float ammount, float damageModifier, Player player);
+    bool TradeHpForTime(int ammount, int damageModifier, Player player);
 }

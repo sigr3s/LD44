@@ -2,15 +2,25 @@ using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
-    public float hp = 30f;
+    public int hp = 2;
     public GameObject deathPrefab;
 
-    public bool TakeDamage(float damage)
+    public int playerRecoverOnKill = 1;
+
+
+    public virtual bool TakeDamage(int damage)
     {
-        Instantiate(deathPrefab, transform);
         GetComponentInParent<MapObject>().RegisterChanges(new BasicMapObjectData{ shouldSpawn = false});        
 
-        GetComponent<SpriteRenderer>().enabled = false;
+        SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
+        
+        foreach(SpriteRenderer renderer in sprites){
+            renderer.enabled = false;
+        }
+
+        GetComponent<Collider2D>().enabled = false;
+        Instantiate(deathPrefab, transform);
+
         Destroy(gameObject, 1f);
         return true;
     }

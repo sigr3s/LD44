@@ -9,7 +9,7 @@ public class BasicMapObjectData{
 
 public class MapObject : MonoBehaviour
 {
-    protected GameObject instnace;
+    public GameObject instnace;
     public GameObject prefab;
 
     public bool alwaysRespawn;
@@ -25,7 +25,12 @@ public class MapObject : MonoBehaviour
         data = GameController.gameData.GetDataFor(this);
 
         if(alwaysRespawn || string.IsNullOrEmpty(data)){
-            SpawnObject();
+            if(instnace == null){
+                SpawnObject();
+            }
+            else
+            {
+            }
         }
         else if(!string.IsNullOrEmpty(data))
         {
